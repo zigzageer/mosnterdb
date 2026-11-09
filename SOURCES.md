@@ -41,3 +41,14 @@ The remaining 44 historical, regional, Reserve, Hydro and Java photos were obtai
 The archive displays representative packaging per indexed flavor. Hydro includes original bottle and can formats, and regional/history labels are based on the source collector catalog. Product photos do not establish release dates, ingredients, current availability, or that this flavor index covers every packaging variant. The original vague "Monster Extra Strength" record was clarified to the photographed "Extra Strength Super Dry" edition.
 
 The redesign uses original HTML, CSS, graphics and interaction code. No application code was copied from the research repositories. Anton and Space Mono were added from Fontsource under the SIL Open Font License, alongside Barlow Condensed and DM Sans. No font depends on an external CDN at runtime.
+
+
+## Current U.S. additions and image audit
+
+The flavor index now contains 101 entries with photos. Fifteen additional U.S. listings were added from a freshly fetched copy of the public `forsmark/monster-mash` dataset, including Ultra Red White Blue Razz, Ultra Punk Punch, Vanilla/Strawberry Shot variants, Lando Norris, Electric Blue, core Orange Dreamsicle, Dubai Chocolate, Killer Brew variants, Voodoo Grape, Juiced Strawberry Lemonade and Viking Berry. All 52 packshots in that public dataset were downloaded again for audit, and the 15 newly published files matched those downloads. `src/official-us-index.json` records coverage and retrieval metadata; `src/image-manifest.json` records image and product source URLs.
+
+Direct HTTPS requests to the Monster website still returned a destination-policy 403. Public dataset retrieval is distinct from a fresh official-site scrape; neither the 52 U.S. records nor the complete 101-entry index proves worldwide historical completeness. A reusable scraper and a public-snapshot download mode are included in `scripts/scrape-official.py`.
+
+Rehab Strawberry Lemonade's photo was corrected to the historical Rehab packaging from the collector dataset. The current Juice Monster Strawberry Lemonade has its own entry and official-source packshot. Ultra Red and Ultra Red White Blue Razz remain separate flavors.
+
+Share cards are generated locally from these same packaging files using Canvas and locally hosted fonts. QR codes encode the user's selected list and optional name as a website fragment. The sample card in `screenshots/` uses an example profile, not user data. QR generation uses the MIT-licensed node-qrcode package; QR decoding in tests uses jsQR and is not shipped to the browser.

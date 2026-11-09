@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
+import { catalog } from '../src/catalog.js';
 
 const docs = fileURLToPath(new URL('../docs/', import.meta.url));
 const types = { '.html':'text/html', '.js':'text/javascript', '.css':'text/css', '.png':'image/png', '.webp':'image/webp', '.svg':'image/svg+xml', '.woff':'font/woff', '.woff2':'font/woff2' };
@@ -29,19 +30,24 @@ try {
   page.on('response', response => { if (response.status() >= 400) failed.push(`${response.status()} ${response.url()}`); });
   await page.goto(`http://127.0.0.1:${server.address().port}/mosnterdb/`);
   await page.locator('.can-card').first().waitFor();
-  assert.equal(await page.locator('.can-card').count(), 86);
+  assert.equal(await page.locator('.can-card').count(), catalog.length);
   await page.locator('img').evaluateAll(images => Promise.all(images.map(image => { image.loading='eager'; return image.decode(); })));
-  assert.equal(await page.locator('.can-photo').count(), 86);
+  assert.equal(await page.locator('.can-photo').count(), catalog.length);
   await page.getByRole('searchbox').fill('mango');
   assert.equal(await page.locator('.can-card').count(), 2);
   await page.getByRole('button', { name:'Add Mango Loco to collection', exact:true }).click();
+  await page.getByRole('button', { name:'Mark Mango Loco as tried', exact:true }).click();
   await page.reload();
   await page.getByRole('button', { name:'My collection', exact:false }).click();
   assert.equal(await page.locator('.can-card').count(), 1);
   assert.equal(await page.locator('.can-label h2').textContent(), 'Mango Loco');
+  await page.locator('#tracker-panel [data-open-share]').click();
+  await page.locator('#download-png').waitFor();
+  await page.waitForFunction(() => !document.querySelector('#download-png').disabled);
+  assert.equal(await page.locator('#share-canvas').getAttribute('width'),'1080');
   assert.deepEqual(errors, []);
   assert.deepEqual(failed, []);
-  console.log('PASS: GitHub Pages /mosnterdb/ path loads all 86 photos, fonts, search and persistent collections with no browser or HTTP errors.');
+  console.log('PASS: GitHub Pages /mosnterdb/ loads all catalog photos, fonts, search, saved collections, tried tracking and PNG export with no browser or HTTP errors.');
 } finally {
   await browser?.close();
   await new Promise(resolve => server.close(resolve));

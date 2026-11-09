@@ -168,10 +168,11 @@
     "retrievedFrom": "https://github.com/forsmark/monster-mash/blob/main/public/cans/peach-tea.webp"
   },
   "strawberry-lemonade": {
-    "file": "strawberry-lemonade.webp",
-    "productUrl": "https://www.monsterenergy.com/en-us/energy-drinks/juice-monster/strawberry-lemonade/",
-    "originalImageUrl": "https://web-assests.monsterenergy.com/mnst/12d06861-08de-4db3-86a3-c64ba1949cac.png",
-    "retrievedFrom": "https://github.com/forsmark/monster-mash/blob/main/public/cans/strawberry-lemonade.webp"
+    "file": "archive-rehab-strawberry-lemonade.png",
+    "productUrl": "https://github.com/fabio-secchiari/monster-collector/blob/main/catalog.js",
+    "originalImageUrl": null,
+    "retrievedFrom": "https://github.com/fabio-secchiari/monster-collector/blob/main/assets/monster/rehab/rehab-strawberry.png",
+    "sourceNote": "Historical Rehab Strawberry Lemonade, separate from the current Juice Monster product."
   },
   "wild-berry-tea": {
     "file": "wild-berry.webp",
@@ -492,5 +493,95 @@
     "originalImageUrl": null,
     "retrievedFrom": "https://github.com/fabio-secchiari/monster-collector/blob/main/assets/monster/juice/punch-ballers-blend.png",
     "sourceNote": "Packaging photo from an independent collector catalog; historical and regional identification is based on that catalog, not a current availability claim."
+  },
+  "vanilla-shot": {
+    "file": "official-monster-energy-vanilla-shot.webp",
+    "productUrl": "https://www.monsterenergy.com/en-us/energy-drinks/monster-energy/monster-energy-vanilla-shot/",
+    "originalImageUrl": "https://web-assests.monsterenergy.com/mnst/9c2482ac-c1cb-4b57-b37a-ad87b50e4073.png",
+    "retrievedFrom": "https://github.com/forsmark/monster-mash/blob/main/public/cans/monster-energy-vanilla-shot.webp"
+  },
+  "zero-sugar-vanilla-shot": {
+    "file": "official-zero-sugar-vanilla-shot.webp",
+    "productUrl": "https://www.monsterenergy.com/en-us/energy-drinks/monster-energy/zero-sugar-vanilla-shot/",
+    "originalImageUrl": "https://web-assests.monsterenergy.com/mnst/2fb52a6a-782b-427e-9f36-c0c43bc32da5.png",
+    "retrievedFrom": "https://github.com/forsmark/monster-mash/blob/main/public/cans/zero-sugar-vanilla-shot.webp"
+  },
+  "lando-norris": {
+    "file": "official-lando-norris.webp",
+    "productUrl": "https://www.monsterenergy.com/en-us/energy-drinks/monster-energy/lando-norris/",
+    "originalImageUrl": "https://web-assests.monsterenergy.com/mnst/637e8b02-7c99-468c-ab65-ab90cbd0ecfb.png",
+    "retrievedFrom": "https://github.com/forsmark/monster-mash/blob/main/public/cans/lando-norris.webp"
+  },
+  "strawberry-shot": {
+    "file": "official-strawberry-shot.webp",
+    "productUrl": "https://www.monsterenergy.com/en-us/energy-drinks/monster-energy/strawberry-shot/",
+    "originalImageUrl": "https://web-assests.monsterenergy.com/mnst/3f8ba93e-6ec9-4ad5-80a3-49a267008905.png",
+    "retrievedFrom": "https://github.com/forsmark/monster-mash/blob/main/public/cans/strawberry-shot.webp"
+  },
+  "zero-sugar-strawberry-shot": {
+    "file": "official-zero-sugar-strawberry-shot.webp",
+    "productUrl": "https://www.monsterenergy.com/en-us/energy-drinks/monster-energy/zero-sugar-strawberry-shot/",
+    "originalImageUrl": "https://web-assests.monsterenergy.com/mnst/96edacb8-96cf-4dac-ab53-5aa098d020aa.png",
+    "retrievedFrom": "https://github.com/forsmark/monster-mash/blob/main/public/cans/zero-sugar-strawberry-shot.webp"
+  },
+  "electric-blue": {
+    "file": "official-electric-blue.webp",
+    "productUrl": "https://www.monsterenergy.com/en-us/energy-drinks/monster-energy/electric-blue/",
+    "originalImageUrl": "https://web-assests.monsterenergy.com/mnst/80f7af64-6bf0-4169-a1b0-25bdbc320368.png",
+    "retrievedFrom": "https://github.com/forsmark/monster-mash/blob/main/public/cans/electric-blue.webp"
+  },
+  "original-orange-dreamsicle": {
+    "file": "official-orange-dreamsicle.webp",
+    "productUrl": "https://www.monsterenergy.com/en-us/energy-drinks/monster-energy/orange-dreamsicle/",
+    "originalImageUrl": "https://web-assests.monsterenergy.com/mnst/265292f7-a055-4fbf-900d-e8d99cfbca65.png",
+    "retrievedFrom": "https://github.com/forsmark/monster-mash/blob/main/public/cans/orange-dreamsicle.webp"
+  },
+  "ultra-red-white-blue-razz": {
+    "file": "official-ultra-red-white-blue-razz.webp",
+    "productUrl": "https://www.monsterenergy.com/en-us/energy-drinks/zero-sugar/ultra-red-white-blue-razz/",
+    "originalImageUrl": "https://web-assests.monsterenergy.com/mnst/b50fd57d-fb73-407c-9451-7e8769ff9d98.png",
+    "retrievedFrom": "https://github.com/forsmark/monster-mash/blob/main/public/cans/ultra-red-white-blue-razz.webp"
+  },
+  "ultra-punk-punch": {
+    "file": "official-ultra-punk-punch.webp",
+    "productUrl": "https://www.monsterenergy.com/en-us/energy-drinks/zero-sugar/ultra-punk-punch/",
+    "originalImageUrl": "https://web-assests.monsterenergy.com/mnst/2fe8f57f-685c-498e-8f1a-627aa46cfe48.png",
+    "retrievedFrom": "https://github.com/forsmark/monster-mash/blob/main/public/cans/ultra-punk-punch.webp"
+  },
+  "dubai-chocolate": {
+    "file": "official-dubai-chocolate.webp",
+    "productUrl": "https://www.monsterenergy.com/en-us/energy-drinks/java-monster/dubai-chocolate/",
+    "originalImageUrl": "https://web-assests.monsterenergy.com/mnst/8c8f247a-98e1-4023-a6d1-6852f36f6a12.png",
+    "retrievedFrom": "https://github.com/forsmark/monster-mash/blob/main/public/cans/dubai-chocolate.webp"
+  },
+  "killer-brew-loca-moca": {
+    "file": "official-killer-brew-loca-moca.webp",
+    "productUrl": "https://www.monsterenergy.com/en-us/energy-drinks/java-monster/killer-brew-loca-moca/",
+    "originalImageUrl": "https://web-assests.monsterenergy.com/mnst/4a1b2252-4a4c-4ab5-9f66-f7e50fb2b68f.png",
+    "retrievedFrom": "https://github.com/forsmark/monster-mash/blob/main/public/cans/killer-brew-loca-moca.webp"
+  },
+  "killer-brew-mean-bean": {
+    "file": "official-killer-brew-mean-bean.webp",
+    "productUrl": "https://www.monsterenergy.com/en-us/energy-drinks/java-monster/killer-brew-mean-bean/",
+    "originalImageUrl": "https://web-assests.monsterenergy.com/mnst/57deb182-fbcf-4b91-a5c5-45c4bc4f92b8.png",
+    "retrievedFrom": "https://github.com/forsmark/monster-mash/blob/main/public/cans/killer-brew-mean-bean.webp"
+  },
+  "voodoo-grape": {
+    "file": "official-voodoo-grape.webp",
+    "productUrl": "https://www.monsterenergy.com/en-us/energy-drinks/juice-monster/voodoo-grape/",
+    "originalImageUrl": "https://web-assests.monsterenergy.com/mnst/853f2d57-7852-4b73-bc0c-419a5fa9897a.png",
+    "retrievedFrom": "https://github.com/forsmark/monster-mash/blob/main/public/cans/voodoo-grape.webp"
+  },
+  "juiced-strawberry-lemonade": {
+    "file": "official-strawberry-lemonade.webp",
+    "productUrl": "https://www.monsterenergy.com/en-us/energy-drinks/juice-monster/strawberry-lemonade/",
+    "originalImageUrl": "https://web-assests.monsterenergy.com/mnst/12d06861-08de-4db3-86a3-c64ba1949cac.png",
+    "retrievedFrom": "https://github.com/forsmark/monster-mash/blob/main/public/cans/strawberry-lemonade.webp"
+  },
+  "viking-berry": {
+    "file": "official-viking-berry.webp",
+    "productUrl": "https://www.monsterenergy.com/en-us/energy-drinks/juice-monster/viking-berry/",
+    "originalImageUrl": "https://web-assests.monsterenergy.com/mnst/78a3ede8-6f73-4ffd-9b03-e77990be30b5.png",
+    "retrievedFrom": "https://github.com/forsmark/monster-mash/blob/main/public/cans/viking-berry.webp"
   }
 }

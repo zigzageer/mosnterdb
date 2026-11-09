@@ -90,6 +90,22 @@ const seed = [
   ['Heavy Metal', 'Original', 'Historical edition', '#a3bb8e'],
   ['Monster M3', 'Original', 'Concentrated energy', '#b2c76e'],
   ['Extra Strength Super Dry', 'Nitro', 'Historical Extra Strength edition', '#bdd493'],
+  // Current U.S. listing additions. Keep existing entries and tracking identities stable.
+  ["Vanilla Shot", "Original", "Vanilla · Classic energy", "#b9d788"],
+  ["Zero Sugar Vanilla Shot", "Original", "Vanilla · Zero sugar", "#b9d788"],
+  ["Lando Norris", "Original", "Melon · Yuzu", "#b9d788"],
+  ["Strawberry Shot", "Original", "Strawberry · Classic energy", "#b9d788"],
+  ["Zero Sugar Strawberry Shot", "Original", "Strawberry · Zero sugar", "#b9d788"],
+  ["Electric Blue", "Original", "Blue raspberry", "#b9d788"],
+  ["Original Orange Dreamsicle", "Original", "Orange · Cream", "#b9d788"],
+  ["Ultra Red White Blue Razz", "Ultra", "Blue raspberry · Zero sugar", "#5798ff"],
+  ["Ultra Punk Punch", "Ultra", "Fruit punch · Zero sugar", "#ff4a9a"],
+  ["Dubai Chocolate", "Java", "Coffee · Chocolate · Pistachio", "#b6ba77"],
+  ["Killer Brew Loca Moca", "Java", "Coffee · Mocha", "#b9d788"],
+  ["Killer Brew Mean Bean", "Java", "Coffee · Vanilla bean", "#b9d788"],
+  ["Voodoo Grape", "Juiced", "Grape · Juice blend", "#b987e3"],
+  ["Juiced Strawberry Lemonade", "Juiced", "Strawberry · Lemonade", "#f5b0bc"],
+  ["Viking Berry", "Juiced", "Mixed berry · Juice blend", "#adc0df"],
 ];
 
 export const catalog = seed.map(([name, family, flavor, color, image], index) => {
