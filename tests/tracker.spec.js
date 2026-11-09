@@ -81,13 +81,14 @@ test('shared links preview safely, merge explicitly and restore on another brows
 });
 
 test('PNG download includes a QR code restoring exactly the selected list',async({page})=>{
-  await seed(page,sample);
+  const ratedSample = {...sample,ratings:{'original-green':5,'ultra-red-white-blue-razz':4}};
+  await seed(page,ratedSample);
   await page.goto('/');
   await page.locator('#tracker-panel [data-open-share]').click();
   await page.getByLabel('NAME ON YOUR CARD (OPTIONAL)').fill('Riley');
   await expect(page.locator('#download-png')).toBeEnabled({timeout:20000});
   const link=await page.getByLabel('Personal tracking link').inputValue();
-  expect(readTrackingHash(new URL(link).hash).profile).toEqual(normalizeProfile({...sample,name:'Riley'}));
+  expect(readTrackingHash(new URL(link).hash).profile).toEqual(normalizeProfile({...ratedSample,name:'Riley'}));
   const downloadPromise=page.waitForEvent('download');
   await page.locator('#download-png').click();
   const download=await downloadPromise;

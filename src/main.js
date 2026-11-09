@@ -14,6 +14,7 @@ const icons = {
   arrow: '<path d="M5 12h14m-5-5 5 5-5 5"/>',
   grid: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
   close: '<path d="m6 6 12 12M6 18 18 6"/>',
+  star: '<path d="m12 3 2.8 5.7 6.3.9-4.6 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9Z"/>',
   share: '<path d="M12 15V3m-4 4 4-4 4 4M5 12v8h14v-8"/>',
   info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v1"/>',
 };
@@ -49,7 +50,7 @@ document.querySelector('#app').innerHTML = `
   <div class="topline"><span>INDEPENDENT. UNFILTERED. UNLEASHED.</span><span>FAN-MADE ARCHIVE <span class="ticker-star">✳</span> EST. 2026</span></div>
   <header class="header">
     <a class="brand" href="#" aria-label="MonsterDB home">${claw}<span>MONSTER<span class="brand-db">//DB</span><small>THE UNOFFICIAL CAN ARCHIVE</small></span></a>
-    <nav aria-label="Main navigation"><button class="nav-link active" data-view="archive" aria-current="page">THE ARCHIVE <span>↗</span></button><button class="nav-link" data-view="collection">My collection <span class="count collection-count">${saved.length}</span></button><button class="nav-link" data-view="tracker">My tried list <span class="count tried-count">${tracker.tried.length}</span></button></nav>
+    <nav aria-label="Main navigation"><button class="nav-link active" data-view="archive" aria-current="page">THE ARCHIVE <span>↗</span></button><button class="nav-link" data-view="collection">My collection <span class="count collection-count">${saved.length}</span></button><button class="nav-link" data-view="tracker">My tried list <span class="count tried-count">${tracker.tried.length}</span></button><button class="nav-link" data-view="left">Left to try <span class="count left-count">${catalog.length-tracker.tried.length}</span></button></nav>
     <button class="about-button" id="about" aria-label="About the archive">${icon('info')}<span>THE LOWDOWN</span></button>
   </header>
   <main>
@@ -71,7 +72,7 @@ document.querySelector('#app').innerHTML = `
     <section class="catalog-section" id="catalog" aria-labelledby="catalog-title">
       <div class="catalog-title-row"><div><div class="eyebrow">// OPEN THE VAULT</div><h2 id="catalog-title">PICK YOUR <em>POISON.</em></h2></div><div class="catalog-stats"><strong>${String(catalog.length).padStart(3,'0')}</strong><span>FLAVORS INDEXED<br><b>${photoCount} REAL CAN PHOTOS</b></span></div></div>
       <div class="catalog-panel">
-        <div class="toolbar"><label class="search">${icon('search')}<input id="search" type="search" placeholder="SEARCH THE MADNESS…" autocomplete="off" aria-label="Search cans"/><kbd>/</kbd></label><div class="toolbar-right"><label class="photo-toggle"><input id="photos" type="checkbox"/><span class="switch" aria-hidden="true"></span> Photos only</label><label class="sort-label">SORT <select id="sort" aria-label="Sort cans"><option value="shelf">Archive order</option><option value="az">Name: A–Z</option><option value="za">Name: Z–A</option></select></label></div></div>
+        <div class="toolbar"><label class="search">${icon('search')}<input id="search" type="search" placeholder="SEARCH THE MADNESS…" autocomplete="off" aria-label="Search cans"/><kbd>/</kbd></label><div class="toolbar-right"><label class="photo-toggle"><input id="photos" type="checkbox"/><span class="switch" aria-hidden="true"></span> Photos only</label><label class="sort-label">SORT <select id="sort" aria-label="Sort cans"><option value="shelf">Archive order</option><option value="az">Name: A–Z</option><option value="za">Name: Z–A</option><option value="rating-desc">Top rated</option><option value="rating-asc">Lowest rated</option></select></label></div></div>
         <div class="family-bar"><div class="family-tabs" role="group" aria-label="Filter by family"><button class="family-tab active" data-family="All" aria-pressed="true">ALL CANS <span>${catalog.length}</span></button>${families.map(f=>`<button class="family-tab" data-family="${f}" aria-pressed="false">${f}</button>`).join('')}</div></div>
         <div class="tracking-filters" role="group" aria-label="Filter by tried status"><button data-tried-filter="all" aria-pressed="true">ALL FLAVORS <span id="all-tried-count">${catalog.length}</span></button><button data-tried-filter="tried" aria-pressed="false">TRIED <span id="filter-tried-count">0</span></button><button data-tried-filter="left" aria-pressed="false">LEFT TO TRY <span id="filter-left-count">${catalog.length}</span></button><button class="mini-share" data-open-share>${icon('share')} MAKE A SHARE CARD</button></div>
         <div class="results-bar"><span id="result-summary" role="status"></span><span>COLLECT IT. TRY IT. TELL THE WORLD.</span></div>
@@ -83,7 +84,7 @@ document.querySelector('#app').innerHTML = `
   </main>
   <dialog id="detail" aria-labelledby="detail-title"></dialog>
   <dialog id="about-dialog" class="about-dialog" aria-labelledby="about-title"><button class="close-dialog" aria-label="Close about dialog">${icon('close')}</button><div class="eyebrow">THE UNOFFICIAL CAN ARCHIVE</div><h2 id="about-title">EVERY CAN HAS<br><em>A STORY.</em></h2><p>MonsterDB is for the people who keep the empty can. Discover flavors, revisit the classics, and make a collection of your own.</p><div class="about-facts"><span><strong>${catalog.length}</strong> flavors indexed</span><span><strong>${photoCount}</strong> real can photos</span></div><h3>STILL HUNTING.</h3><p>This archive is growing. Regional editions, packaging redesigns, release dates, and availability need further verification. It is not yet a complete history of every Monster ever made.</p><p>Photos are sourced from public product catalogs and showcase datasets, with provenance recorded in the project. Missing photos are clearly marked. Product imagery and trademarks belong to their owners.</p><h3>YOUR CANS. YOUR BROWSER.</h3><p>Your collection and tried list save automatically in this browser. No account needed. Copy your personal tracking link to keep a snapshot or open it on another device. Opening someone else’s link previews their list without replacing yours. Each link captures the progress at the time it was copied; copy or bookmark a new link after updates.</p><a class="source-link" href="https://www.monsterenergy.com/en-us/energy-drinks/" target="_blank" rel="noreferrer">OFFICIAL MONSTER LINEUP ${icon('arrow')}</a></dialog>
-  <dialog id="share-dialog" aria-labelledby="share-title"><button class="close-dialog" aria-label="Close share card">${icon('close')}</button><div class="share-editor"><div class="eyebrow">YOUR TASTE. LOUD &amp; PROUD.</div><h2 id="share-title">MAKE IT<br><em>SHAREABLE.</em></h2><label class="card-name-label">NAME ON YOUR CARD (OPTIONAL)<input id="card-name" type="text" maxlength="28" autocomplete="nickname" placeholder="Your name"/></label><p>Every tried can. One graphic. Download the PNG or share it from your phone. Its QR code opens this exact list.</p><div id="share-status" role="status">Building your card…</div><div class="share-actions"><button class="collect-main" id="download-png" disabled>${icon('share')} DOWNLOAD PNG</button><button class="outline-button" id="native-share" hidden>SHARE IMAGE</button><button class="outline-button" id="copy-share-link">COPY PERSONAL LINK</button><button class="outline-button" id="retry-card" hidden>RETRY CARD</button></div><label class="share-link-label">YOUR PERSONAL TRACKING LINK<input id="share-link" type="text" readonly aria-label="Personal tracking link"/></label><p class="share-link-note">This link holds a snapshot of your tried list. Save a fresh link after adding cans. Browser progress saves automatically.</p></div><div class="share-preview" id="share-preview"></div></dialog>
+  <dialog id="share-dialog" aria-labelledby="share-title"><button class="close-dialog" aria-label="Close share card">${icon('close')}</button><div class="share-editor"><div class="eyebrow">YOUR TASTE. LOUD &amp; PROUD.</div><h2 id="share-title">MAKE IT<br><em>SHAREABLE.</em></h2><label class="card-name-label">NAME ON YOUR CARD (OPTIONAL)<input id="card-name" type="text" maxlength="28" autocomplete="nickname" placeholder="Your name"/></label><p>Every tried can. One graphic. Download the PNG or share it from your phone. Your personal star ratings appear beside each can. Its QR code opens this exact list.</p><div id="share-status" role="status">Building your card…</div><div class="share-actions"><button class="collect-main" id="download-png" disabled>${icon('share')} DOWNLOAD PNG</button><button class="outline-button" id="native-share" hidden>SHARE IMAGE</button><button class="outline-button" id="copy-share-link">COPY PERSONAL LINK</button><button class="outline-button" id="retry-card" hidden>RETRY CARD</button></div><label class="share-link-label">YOUR PERSONAL TRACKING LINK<input id="share-link" type="text" readonly aria-label="Personal tracking link"/></label><p class="share-link-note">This link holds a snapshot of your tried list. Save a fresh link after adding cans. Browser progress saves automatically.</p></div><div class="share-preview" id="share-preview"></div></dialog>
   <div id="toast" role="status" aria-live="polite"></div>
 `;
 
@@ -97,6 +98,13 @@ function triedButton(can, modal = false) {
   return `<button class="tried-toggle ${modal ? 'tried-detail' : ''} ${tried ? 'is-tried' : ''}" data-tried="${can.id}" aria-label="Mark ${escape(can.name)} as ${tried ? 'not tried' : 'tried'}" aria-pressed="${tried}" ${sharedTracker ? 'disabled title="Use this list as your tracker to make changes"' : ''}>${icon(tried ? 'check' : 'plus')} ${tried ? 'TRIED IT' : 'MARK AS TRIED'}<span>${tried ? 'SAVED' : 'NOT YET'}</span></button>`;
 }
 
+function ratingControls(can) {
+  const profile = activeTracker();
+  if (!profile.tried.includes(can.id)) return `<div class="rating-prompt">${icon('star')} TRY IT, THEN RATE IT.</div>`;
+  const rating = profile.ratings?.[can.id] || 0;
+  return `<div class="can-rating"><div class="rating-caption"><span>${sharedTracker ? 'THEIR RATING' : 'YOUR RATING'}</span><strong>${rating ? `${rating}/5` : 'UNRATED'}</strong>${rating && !sharedTracker ? `<button data-clear-rating="${can.id}" aria-label="Clear rating for ${escape(can.name)}">CLEAR</button>` : ''}</div><div class="rating-stars" role="group" aria-label="Rate ${escape(can.name)}">${[1,2,3,4,5].map(value=>`<button class="${value<=rating ? 'filled' : ''}" data-rate="${can.id}" data-value="${value}" aria-label="Rate ${escape(can.name)} ${value} out of 5 stars" aria-pressed="${rating===value}" ${sharedTracker ? 'disabled' : ''}>${icon('star')}</button>`).join('')}</div></div>`;
+}
+
 function collectionButton(can, modal = false) {
   const added = saved.includes(can.id);
   return `<button class="${modal ? 'collect-main' : 'collect-button'} ${added ? 'is-saved' : ''}" data-collect="${can.id}" aria-label="${added ? 'Remove' : 'Add'} ${escape(can.name)} ${added ? 'from' : 'to'} collection" aria-pressed="${added}">${icon(added ? 'check' : 'plus')}${modal ? (added ? 'In your collection' : 'Add to my collection') : ''}</button>`;
@@ -108,15 +116,28 @@ function renderGrid() {
   let cans = filterCatalog(state);
   if (state.triedFilter === 'tried') cans = cans.filter(can => selected.has(can.id));
   if (state.triedFilter === 'left') cans = cans.filter(can => !selected.has(can.id));
+  if (state.sort === 'rating-desc' || state.sort === 'rating-asc') {
+    const ratings = activeTracker().ratings || {};
+    const direction = state.sort === 'rating-desc' ? -1 : 1;
+    cans.sort((a,b) => {
+      const first=ratings[a.id] || 0, second=ratings[b.id] || 0;
+      if (!first || !second) return first ? -1 : second ? 1 : 0;
+      return direction*(first-second) || a.name.localeCompare(b.name);
+    });
+  }
   renderTracker();
-  document.querySelector('#result-summary').textContent = `${String(cans.length).padStart(2, '0')} CANS FOUND${state.collection ? ' // YOUR COLLECTION' : state.view === 'tracker' ? ' // YOUR TRIED LIST' : ' // THE ARCHIVE'}`;
+  document.querySelector('#result-summary').textContent = `${String(cans.length).padStart(2, '0')} CANS FOUND${state.collection ? ' // YOUR COLLECTION' : state.view === 'left' ? ' // LEFT TO TRY' : state.view === 'tracker' ? ' // YOUR TRIED LIST' : ' // THE ARCHIVE'}`;
   document.querySelector('#grid').innerHTML = cans.map(can => `<article class="can-card ${can.image ? '' : 'missing-photo'} ${selected.has(can.id) ? 'has-tried' : ''}" style="--can-color:${can.color}">
     <div class="card-top"><span class="serial">M//${can.number}</span>${collectionButton(can)}</div>
     <button class="can-display" data-detail="${can.id}" aria-label="View ${escape(can.name)} details"><span class="card-orbit" aria-hidden="true"></span><span class="card-watermark" aria-hidden="true">${escape(can.family)}</span>${canVisual(can)}<span class="stage-caption">${can.image ? 'THE REAL DEAL' : 'PHOTO NOT YET SOURCED'} // ${can.number}</span></button>
-    <button class="can-label" data-detail="${can.id}" aria-label="Details for ${escape(can.name)}"><span class="family-label"><i></i>${can.family === 'Juiced' ? 'JUICED / PUNCH' : can.family.toUpperCase()}</span><h2>${escape(can.name)}</h2><p>${escape(can.flavor)}</p><span class="label-arrow">${icon('arrow')}</span></button>${triedButton(can)}
+    <button class="can-label" data-detail="${can.id}" aria-label="Details for ${escape(can.name)}"><span class="family-label"><i></i>${can.family === 'Juiced' ? 'JUICED / PUNCH' : can.family.toUpperCase()}</span><h2>${escape(can.name)}</h2><p>${escape(can.flavor)}</p><span class="label-arrow">${icon('arrow')}</span></button>${triedButton(can)}${ratingControls(can)}
   </article>`).join('');
   const empty = document.querySelector('#empty');
   empty.hidden = cans.length > 0;
+  if (state.view === 'left' && selected.size === catalog.length) {
+    empty.innerHTML = `${icon('check')}<h2>NOTHING LEFT. LEGEND STATUS.</h2><p>You have tried every flavor in this archive. Your full tried list is ready to share.</p><button class="collect-main" data-view="tracker">VIEW MY TRIED LIST ${icon('arrow')}</button>`;
+    return;
+  }
   const firstTry = state.view === 'tracker' && state.triedFilter === 'tried' && !selected.size;
   if (firstTry) { empty.innerHTML = `${icon('check')}<h2>YOUR FIRST CAN IS OUT THERE.</h2><p>Mark the flavors you have tried, then turn your list into a share card.</p><button class="collect-main" data-tried-filter="left">FIND YOUR FIRST CAN ${icon('arrow')}</button>`; return; }
   empty.innerHTML = `${icon('grid')}<h2>${state.collection && !saved.length ? 'YOUR COLLECTION STARTS HERE.' : 'NOTHING IN THE VAULT.'}</h2><p>${state.collection && !saved.length ? 'Hit + on a can in the archive to make it yours.' : 'Try another flavor or clear your filters. There are plenty more cans to find.'}</p><button id="reset" class="collect-main">${state.collection ? 'Explore the archive' : 'Reset filters'} ${icon('arrow')}</button>`;
@@ -138,7 +159,7 @@ function toggleCollection(id) {
   const focusedId = document.activeElement?.dataset.collect;
   const returnId = lastFocus?.dataset.detail;
   renderGrid();
-  if (returnId) lastFocus = document.querySelector(`[data-detail="${returnId}"]`);
+  if (returnId && !lastFocus?.isConnected) lastFocus = document.querySelector(`#grid [data-detail="${returnId}"]`) || document.querySelector(`[data-detail="${returnId}"]`);
   document.querySelector('.collection-count').textContent = saved.length;
   if (currentCan && document.querySelector('#detail').open) renderDetail(currentCan);
   if (focusedId) {
@@ -149,14 +170,14 @@ function toggleCollection(id) {
 }
 
 function renderDetail(can) {
-  document.querySelector('#detail').innerHTML = `<button class="close-dialog" aria-label="Close can details">${icon('close')}</button><div class="detail-visual" style="--can-color:${can.color}"><span class="detail-serial">M//${can.number} — ARCHIVE ENTRY</span><span class="card-orbit"></span>${canVisual(can)}</div><div class="detail-copy"><div class="eyebrow">${can.family.toUpperCase()} // MONSTER ARCHIVE</div><h2 id="detail-title">${escape(can.name)}</h2><p class="detail-flavor">${escape(can.flavor)}</p><div class="detail-divider"></div><p>${can.image ? 'One more for the collection. Claim this can and keep your personal lineup in one place.' : 'Still hunting for this one. A sourced photo of the packaging has not been added yet.'}</p><dl><div><dt>FAMILY</dt><dd>${can.family}</dd></div><div><dt>ARTWORK</dt><dd>${can.image ? 'Product photo' : 'Photo wanted'}</dd></div></dl>${collectionButton(can, true)}${triedButton(can, true)}<a class="source-link" href="${can.source}" target="_blank" rel="noreferrer">${can.source.endsWith('/energy-drinks/') ? 'OFFICIAL MONSTER CATALOG' : 'VIEW PRODUCT SOURCE'} ${icon('arrow')}</a><small class="detail-note">Packaging and availability vary by region. An archive entry does not confirm current production.</small></div>`;
+  document.querySelector('#detail').innerHTML = `<button class="close-dialog" aria-label="Close can details">${icon('close')}</button><div class="detail-visual" style="--can-color:${can.color}"><span class="detail-serial">M//${can.number} — ARCHIVE ENTRY</span><span class="card-orbit"></span>${canVisual(can)}</div><div class="detail-copy"><div class="eyebrow">${can.family.toUpperCase()} // MONSTER ARCHIVE</div><h2 id="detail-title">${escape(can.name)}</h2><p class="detail-flavor">${escape(can.flavor)}</p><div class="detail-divider"></div><p>${can.image ? 'One more for the collection. Claim this can and keep your personal lineup in one place.' : 'Still hunting for this one. A sourced photo of the packaging has not been added yet.'}</p><dl><div><dt>FAMILY</dt><dd>${can.family}</dd></div><div><dt>ARTWORK</dt><dd>${can.image ? 'Product photo' : 'Photo wanted'}</dd></div></dl>${collectionButton(can, true)}${triedButton(can, true)}${ratingControls(can)}<a class="source-link" href="${can.source}" target="_blank" rel="noreferrer">${can.source.endsWith('/energy-drinks/') ? 'OFFICIAL MONSTER CATALOG' : 'VIEW PRODUCT SOURCE'} ${icon('arrow')}</a><small class="detail-note">Packaging and availability vary by region. An archive entry does not confirm current production.</small></div>`;
 }
 
 function activeTracker() { return sharedTracker || tracker; }
 
 function updateTrackerUrl() {
   if (sharedTracker) return;
-  try { history.replaceState(null, '', location.pathname + location.search + trackingHash(tracker)); } catch { /* The copy link still works if history is unavailable. */ }
+  try { history.replaceState(null, '', location.pathname + location.search + trackingHash(tracker, {view:state.view === 'left' ? 'left' : undefined})); } catch { /* The copy link still works if history is unavailable. */ }
 }
 
 function persistTracker() {
@@ -169,11 +190,14 @@ function renderTracker() {
   const profile = activeTracker();
   const count = profile.tried.length;
   const percent = Math.round(count / catalog.length * 100);
-  document.querySelector('.tried-count').textContent = tracker.tried.length;
+  const values = Object.values(profile.ratings || {});
+  const average = values.length ? (values.reduce((sum,rating)=>sum+rating,0)/values.length).toFixed(1) : null;
+  document.querySelector('.tried-count').textContent = count;
+  document.querySelector('.left-count').textContent = catalog.length-count;
   document.querySelector('#filter-tried-count').textContent = count;
   document.querySelector('#filter-left-count').textContent = catalog.length - count;
   document.querySelectorAll('[data-tried-filter]').forEach(button => button.setAttribute('aria-pressed', button.dataset.triedFilter === state.triedFilter));
-  document.querySelector('#tracker-panel').innerHTML = `<div class="tracker-heading"><span class="eyebrow">${sharedTracker ? 'SHARED TRIED LIST // PREVIEW' : 'YOUR FLAVOR PASSPORT'}</span><h2>${profile.name ? `${escape(profile.name)}’S` : 'YOUR'} <em>TRIED LIST.</em></h2><p>${sharedTracker ? 'Viewing a shared snapshot. Your own saved progress stays untouched.' : trackerStorageAvailable ? 'Mark what you have tried. Find what is next. Make it shareable.' : 'Browser storage is unavailable. Copy your tracking link to keep your progress.'}</p></div><div class="tracker-progress"><div class="tracker-numbers"><strong>${count}<small>/${catalog.length}</small></strong><span>TRIED<br><b>${catalog.length-count} LEFT TO TRY</b></span><em>${percent}%</em></div><div class="progress-track" role="progressbar" aria-label="Flavors tried" aria-valuemin="0" aria-valuemax="${catalog.length}" aria-valuenow="${count}"><span style="width:${percent}%"></span></div><div class="tracker-actions"><button class="tracker-share" data-open-share>${icon('share')} MAKE SHARE CARD</button><button class="tracker-link" id="copy-tracker-link">COPY TRACKING LINK ${icon('arrow')}</button></div>${sharedTracker ? `<div class="shared-actions"><button id="use-shared">${tracker.tried.length ? 'ADD TO MY TRACKER' : 'USE THIS TRACKER'} ${icon('plus')}</button><button id="back-to-mine">BACK TO MY LIST</button></div>` : '<span class="tracker-save-note">SAVED IN THIS BROWSER · PERSONAL LINK = A COPY OF THIS PROGRESS</span>'}</div>`;
+  document.querySelector('#tracker-panel').innerHTML = `<div class="tracker-heading"><span class="eyebrow">${sharedTracker ? 'SHARED TRIED LIST // PREVIEW' : 'YOUR FLAVOR PASSPORT'}</span><h2>${profile.name ? `${escape(profile.name)}’S` : 'YOUR'} <em>${state.view === 'left' ? 'LEFT TO TRY.' : 'TRIED LIST.'}</em></h2><p>${sharedTracker ? 'Viewing a shared snapshot. Your own saved progress stays untouched.' : trackerStorageAvailable ? state.view === 'left' ? 'Your untried flavors, all in one place. Mark one tried to move it to your tried list.' : 'Mark what you have tried. Rate your favorites. Make it shareable.' : 'Browser storage is unavailable. Copy your tracking link to keep your progress.'}</p><span class="rating-summary">${average ? `${values.length} RATED // ${average}/5 AVERAGE` : 'RATE YOUR TRIED CANS TO FIND YOUR FAVORITES'}</span></div><div class="tracker-progress"><div class="tracker-numbers"><strong>${count}<small>/${catalog.length}</small></strong><span>TRIED<br><b>${catalog.length-count} LEFT TO TRY</b></span><em>${percent}%</em></div><div class="progress-track" role="progressbar" aria-label="Flavors tried" aria-valuemin="0" aria-valuemax="${catalog.length}" aria-valuenow="${count}"><span style="width:${percent}%"></span></div><div class="tracker-actions"><button class="tracker-share" data-open-share>${icon('share')} MAKE SHARE CARD</button><button class="tracker-link" id="copy-tracker-link">COPY TRACKING LINK ${icon('arrow')}</button></div>${sharedTracker ? `<div class="shared-actions"><button id="use-shared">${tracker.tried.length ? 'ADD TO MY TRACKER' : 'USE THIS TRACKER'} ${icon('plus')}</button><button id="back-to-mine">BACK TO MY LIST</button></div>` : '<span class="tracker-save-note">SAVED IN THIS BROWSER · PERSONAL LINK = A COPY OF THIS PROGRESS</span>'}</div>`;
   if (restoreShareFocus) lastFocus = document.querySelector('#tracker-panel [data-open-share]');
 }
 
@@ -186,19 +210,37 @@ function toggleTried(id) {
   persistTracker();
   const returnId = lastFocus?.dataset.detail;
   renderGrid();
-  if (returnId) lastFocus = document.querySelector(`[data-detail="${returnId}"]`);
+  if (returnId && !lastFocus?.isConnected) lastFocus = document.querySelector(`#grid [data-detail="${returnId}"]`) || document.querySelector(`[data-detail="${returnId}"]`);
   if (currentCan && document.querySelector('#detail').open) renderDetail(currentCan);
   const focusRoot = document.querySelector('#detail').open ? document.querySelector('#detail') : document.querySelector('#grid');
   (focusRoot.querySelector(`[data-tried="${id}"]`) || document.querySelector('[data-tried-filter="tried"]')).focus({ preventScroll:true });
   showToast(trackerStorageAvailable ? `${can.name} ${wasTried ? 'removed from' : 'added to'} your tried list` : 'Updated for this visit. Copy your tracking link to save this progress.');
 }
 
+function rateCan(id, value) {
+  if (sharedTracker) return showToast('Use this list as your tracker to change ratings.');
+  const can=catalog.find(can=>can.id===id);
+  if (!can || !tracker.tried.includes(id) || !Number.isInteger(value) || value<0 || value>5) return;
+  const ratings={...tracker.ratings};
+  if (value) ratings[id]=value; else delete ratings[id];
+  tracker=normalizeProfile({...tracker,ratings});
+  persistTracker();
+  const returnId=lastFocus?.dataset.detail;
+  renderGrid();
+  if (returnId && !lastFocus?.isConnected) lastFocus=document.querySelector(`#grid [data-detail="${returnId}"]`) || document.querySelector(`[data-detail="${returnId}"]`);
+  if (currentCan && document.querySelector('#detail').open) renderDetail(currentCan);
+  const root=document.querySelector('#detail').open ? document.querySelector('#detail') : document.querySelector('#grid');
+  root.querySelector(`[data-rate="${id}"][data-value="${value || 1}"]`)?.focus({preventScroll:true});
+  showToast(trackerStorageAvailable ? value ? `${can.name} rated ${value}/5` : `${can.name} rating cleared` : 'Rating updated. Copy your link to keep it outside this visit.');
+}
+
 function adoptSharedTracker() {
   if (!sharedTracker) return;
-  tracker = normalizeProfile({ name:tracker.name || sharedTracker.name, tried:[...tracker.tried,...sharedTracker.tried] });
+  const nextView = state.view;
+  tracker = normalizeProfile({ name:tracker.name || sharedTracker.name, tried:[...tracker.tried,...sharedTracker.tried], ratings:{...sharedTracker.ratings,...tracker.ratings} });
   sharedTracker = null;
   persistTracker();
-  setView('tracker');
+  setView(nextView === 'left' ? 'left' : 'tracker');
   showToast('Your tracker is ready. Mark more cans or save your new link.');
 }
 
@@ -263,7 +305,7 @@ async function shareCardNatively() {
 }
 
 async function copyTrackerLink() {
-  const link = trackingLink(activeTracker());
+  const link = trackingLink(activeTracker(), {view:!document.querySelector('#share-dialog').open && state.view === 'left' ? 'left' : undefined});
   try { await navigator.clipboard.writeText(link); showToast('Personal tracking link copied. Save a fresh link after adding cans.'); }
   catch {
     if (!document.querySelector('#share-dialog').open) openShareCard();
@@ -278,26 +320,31 @@ function openDialog(dialog) {
   document.body.classList.add('dialog-open');
 }
 
-function setView(view, filter = view === 'tracker' ? 'tried' : 'all') {
+function setView(view, filter = view === 'left' ? 'left' : view === 'tracker' ? 'tried' : 'all') {
   state.view = view;
   state.collection = view === 'collection';
   state.triedFilter = filter;
-  document.body.classList.toggle('tracker-view', view === 'tracker');
+  document.body.classList.toggle('tracker-view', view === 'tracker' || view === 'left');
   document.querySelectorAll('[data-view]').forEach(button => {
     const active = button.dataset.view === view;
     button.classList.toggle('active', active);
     if (active) button.setAttribute('aria-current','page'); else button.removeAttribute('aria-current');
   });
   document.querySelector('#page-title').innerHTML = view === 'collection' ? 'YOUR CANS.<br><em>YOUR RULES.</em>' : 'UNLEASH<br>THE <em>OBSESSION.</em>';
-  document.querySelector('#catalog-title').innerHTML = view === 'tracker' ? 'YOUR TASTE. <em>YOUR RULES.</em>' : 'PICK YOUR <em>POISON.</em>';
+  document.querySelector('#catalog-title').innerHTML = view === 'left' ? 'YOUR NEXT <em>OBSESSION.</em>' : view === 'tracker' ? 'YOUR TASTE. <em>YOUR RULES.</em>' : 'PICK YOUR <em>POISON.</em>';
+  if ((view === 'tracker' || view === 'left') && !sharedTracker) updateTrackerUrl();
   renderGrid();
 }
 
 document.addEventListener('click', event => {
+  const rating = event.target.closest('[data-rate]');
+  if (rating) return rateCan(rating.dataset.rate, Number(rating.dataset.value));
+  const clearRating = event.target.closest('[data-clear-rating]');
+  if (clearRating) return rateCan(clearRating.dataset.clearRating, 0);
   const tried = event.target.closest('[data-tried]');
   if (tried) return toggleTried(tried.dataset.tried);
   const triedFilter = event.target.closest('[data-tried-filter]');
-  if (triedFilter) return setView('tracker', triedFilter.dataset.triedFilter);
+  if (triedFilter) return setView(triedFilter.dataset.triedFilter === 'left' ? 'left' : 'tracker', triedFilter.dataset.triedFilter);
   if (event.target.closest('[data-open-share]')) return openShareCard();
   if (event.target.closest('#copy-tracker-link') || event.target.closest('#copy-share-link')) return copyTrackerLink();
   if (event.target.closest('#use-shared')) return adoptSharedTracker();
@@ -320,7 +367,7 @@ document.addEventListener('click', event => {
     return renderGrid();
   }
   const view = event.target.closest('[data-view]');
-  if (view) { setView(view.dataset.view); if (view.closest('.collector-banner')) document.querySelector('#catalog').scrollIntoView({ behavior: 'smooth' }); return; }
+  if (view) { if(view.dataset.view === 'left') clearCatalogFilters(); setView(view.dataset.view); if (view.closest('.collector-banner')) document.querySelector('#catalog').scrollIntoView({ behavior: 'smooth' }); return; }
   if (event.target.closest('#explore')) return document.querySelector('#catalog').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   if (event.target.closest('.brand')) { event.preventDefault(); reset(); return; }
   if (event.target.closest('#reset')) return reset();
@@ -329,14 +376,14 @@ document.addEventListener('click', event => {
   if (event.target.closest('#back-top')) window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
 });
 
-function reset() {
+function clearCatalogFilters() {
   Object.assign(state, { query: '', family: 'All', photos: false, sort: 'shelf' });
   document.querySelector('#search').value = '';
   document.querySelector('#photos').checked = false;
   document.querySelector('#sort').value = 'shelf';
   document.querySelectorAll('[data-family]').forEach(b => { const active = b.dataset.family === 'All'; b.classList.toggle('active', active); b.setAttribute('aria-pressed', active); });
-  setView('archive');
 }
+function reset() { clearCatalogFilters(); setView('archive'); }
 document.querySelector('#search').addEventListener('input', e => { state.query = e.target.value; renderGrid(); });
 document.querySelector('#photos').addEventListener('change', e => { state.photos = e.target.checked; renderGrid(); });
 document.querySelector('#sort').addEventListener('change', e => { state.sort = e.target.value; renderGrid(); });
@@ -376,8 +423,8 @@ window.addEventListener('hashchange', () => {
   if (incoming?.error) return showToast(incoming.error);
   if (incoming?.profile) {
     sharedTracker = sameProfile(incoming.profile,tracker) ? null : incoming.profile;
-    setView('tracker');
+    setView(incoming.view);
   }
 });
-setView(incomingTracker?.profile ? 'tracker' : 'archive');
+setView(incomingTracker?.profile ? incomingTracker.view : 'archive');
 if (incomingTracker?.error) showToast(incomingTracker.error);

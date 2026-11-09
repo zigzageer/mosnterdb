@@ -37,17 +37,19 @@ try {
   assert.equal(await page.locator('.can-card').count(), 2);
   await page.getByRole('button', { name:'Add Mango Loco to collection', exact:true }).click();
   await page.getByRole('button', { name:'Mark Mango Loco as tried', exact:true }).click();
+  await page.getByRole('button', { name:'Rate Mango Loco 5 out of 5 stars', exact:true }).click();
   await page.reload();
   await page.getByRole('button', { name:'My collection', exact:false }).click();
   assert.equal(await page.locator('.can-card').count(), 1);
   assert.equal(await page.locator('.can-label h2').textContent(), 'Mango Loco');
+  assert.equal(await page.getByRole('button', {name:'Rate Mango Loco 5 out of 5 stars',exact:true}).getAttribute('aria-pressed'),'true');
   await page.locator('#tracker-panel [data-open-share]').click();
   await page.locator('#download-png').waitFor();
   await page.waitForFunction(() => !document.querySelector('#download-png').disabled);
   assert.equal(await page.locator('#share-canvas').getAttribute('width'),'1080');
   assert.deepEqual(errors, []);
   assert.deepEqual(failed, []);
-  console.log('PASS: GitHub Pages /mosnterdb/ loads all catalog photos, fonts, search, saved collections, tried tracking and PNG export with no browser or HTTP errors.');
+  console.log('PASS: GitHub Pages /mosnterdb/ loads all catalog photos, fonts, search, saved collections, tried tracking, persistent ratings and PNG export with no browser or HTTP errors.');
 } finally {
   await browser?.close();
   await new Promise(resolve => server.close(resolve));

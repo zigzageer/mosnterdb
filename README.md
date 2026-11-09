@@ -4,7 +4,8 @@ A Monster-inspired Y2K can archive: acid green graphics, distressed oversized ty
 
 ## Tried lists and share cards
 
-- Use **Mark as tried** on a can or in its details. **My tried list** shows your progress; **Left to try** shows the remaining flavors. The existing collection feature stays separate.
+- Use **Mark as tried** on a can or in its details. **My tried list** shows your progress; **Left to try** is a dedicated main-navigation list showing every remaining flavor. It updates when you mark a can tried and can be bookmarked or shared directly. The existing collection feature stays separate.
+- Tried cans have personal **1–5 star ratings**, with change and clear controls on the card and in its details. Use **Top rated** or **Lowest rated** sorting to review them. Ratings are included in browser storage, personal links and PNG share cards. Marking a can untried removes its rating.
 - Progress saves automatically in localStorage. **Copy tracking link** creates a compact link that carries the current selection and optional display name. No account, cookie, API key or backend is required.
 - A link is a snapshot, not a permanently synchronized account. The address bar updates when you change your own tracker. Copy or bookmark the updated address after changes to preserve the latest state on another device.
 - Someone else's link opens in preview mode and leaves your progress untouched. **Use this tracker** restores it on a fresh browser; **Add to my tracker** merges it with existing progress rather than replacing it.
@@ -13,7 +14,7 @@ A Monster-inspired Y2K can archive: acid green graphics, distressed oversized ty
 
 ![Example downloadable tried-list PNG](screenshots/tried-card-example.png)
 
-The link codec uses the append-only `src/tracking-ids.json` registry. **Never reorder or delete existing IDs.** Append new IDs when adding a can. This keeps older links stable even if the catalog display order changes. Invalid links do not replace saved progress.
+The link codec uses the append-only `src/tracking-ids.json` registry. **Never reorder or delete existing IDs.** Append new IDs when adding a can. This keeps older links stable even if the catalog display order changes. Ratings use an optional compact `r` field; older tried-only links remain valid. Remaining-list links add `view=left`. When shared lists are merged, existing personal ratings take priority over conflicting incoming ratings. Invalid links do not replace saved progress.
 
 ## GitHub Pages
 
@@ -51,7 +52,7 @@ npm run build
 npm test
 ```
 
-Browser tests use `/usr/bin/chromium`; set `CHROMIUM_PATH` for the production Pages smoke test on another machine, and update Playwright's `executablePath` for its development suite. The 12 tests cover every image, official U.S. dataset coverage, filters, search, sorting, collections, tried tracking, compact link round trips, cross-browser restoration, non-destructive shared previews, unavailable storage, PNG downloads, actual QR decoding, full-catalog export, keyboard focus and mobile layout. A separate production smoke test verifies the `/mosnterdb/` path, tracking and PNG generation.
+Browser tests use `/usr/bin/chromium`; set `CHROMIUM_PATH` for the production Pages smoke test on another machine, and update Playwright's `executablePath` for its development suite. The 18 tests cover every image, official U.S. dataset coverage, filters, search, sorting, collections, tried tracking, compact link round trips, cross-browser restoration, non-destructive shared previews, unavailable storage, PNG downloads, actual QR decoding, full-catalog export, star rating persistence and sorting, backward-compatible rated links, shared-rating merge rules, the dedicated remaining list, keyboard focus and mobile layout. A separate production smoke test verifies the `/mosnterdb/` path, tracking and PNG generation.
 
 Each cloud task is already isolated. Use the existing checkout; do not create a Git worktree unless explicitly requested. Live server processes must be restarted after restoring an environment snapshot.
 
