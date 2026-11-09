@@ -1,0 +1,48 @@
+import assert from 'node:assert/strict';
+import { createServer } from 'node:http';
+import { readFile } from 'node:fs/promises';
+import { resolve, extname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { chromium } from '@playwright/test';
+
+const docs = fileURLToPath(new URL('../docs/', import.meta.url));
+const types = { '.html':'text/html', '.js':'text/javascript', '.css':'text/css', '.png':'image/png', '.webp':'image/webp', '.svg':'image/svg+xml', '.woff':'font/woff', '.woff2':'font/woff2' };
+const server = createServer(async (req, res) => {
+  const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
+  if (!pathname.startsWith('/mosnterdb/')) { res.writeHead(404).end(); return; }
+  const relative = pathname.slice('/mosnterdb/'.length) || 'index.html';
+  const file = resolve(docs, relative);
+  if (!file.startsWith(docs)) { res.writeHead(403).end(); return; }
+  try {
+    const data = await readFile(file);
+    res.writeHead(200, { 'Content-Type': types[extname(file)] || 'application/octet-stream' }).end(data);
+  } catch { res.writeHead(404).end(); }
+});
+await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+let browser;
+try {
+  browser = await chromium.launch({ executablePath:process.env.CHROMIUM_PATH || '/usr/bin/chromium', args:['--no-sandbox'] });
+  const page = await browser.newPage({ viewport:{width:1440,height:1000} });
+  const errors = [];
+  const failed = [];
+  page.on('pageerror', error => errors.push(error.message));
+  page.on('response', response => { if (response.status() >= 400) failed.push(`${response.status()} ${response.url()}`); });
+  await page.goto(`http://127.0.0.1:${server.address().port}/mosnterdb/`);
+  await page.locator('.can-card').first().waitFor();
+  assert.equal(await page.locator('.can-card').count(), 86);
+  await page.locator('img').evaluateAll(images => Promise.all(images.map(image => { image.loading='eager'; return image.decode(); })));
+  assert.equal(await page.locator('.can-photo').count(), 86);
+  await page.getByRole('searchbox').fill('mango');
+  assert.equal(await page.locator('.can-card').count(), 2);
+  await page.getByRole('button', { name:'Add Mango Loco to collection', exact:true }).click();
+  await page.reload();
+  await page.getByRole('button', { name:'My collection', exact:false }).click();
+  assert.equal(await page.locator('.can-card').count(), 1);
+  assert.equal(await page.locator('.can-label h2').textContent(), 'Mango Loco');
+  assert.deepEqual(errors, []);
+  assert.deepEqual(failed, []);
+  console.log('PASS: GitHub Pages /mosnterdb/ path loads all 86 photos, fonts, search and persistent collections with no browser or HTTP errors.');
+} finally {
+  await browser?.close();
+  await new Promise(resolve => server.close(resolve));
+}
