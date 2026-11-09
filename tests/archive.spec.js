@@ -6,8 +6,9 @@ test('catalog photos load and every indexed entry is browsable', async ({ page }
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/');
   await expect(page.locator('.can-card')).toHaveCount(catalog.length);
-  await page.getByLabel('Photos only').check();
-  await expect(page.locator('.can-card')).toHaveCount(catalog.filter(c => c.image).length);
+  // Every entry has a photo, so the old "Photos only" switch would be a dead control.
+  expect(catalog.every(c => c.image)).toBe(true);
+  await expect(page.getByLabel('Photos only')).toHaveCount(0);
   await page.locator('footer').scrollIntoViewIfNeeded();
   // The expanded catalog spans many viewports; explicitly decode each lazy photo.
   await page.locator('.can-photo').evaluateAll(images => Promise.all(images.map(image => {
@@ -23,14 +24,12 @@ test('catalog photos load and every indexed entry is browsable', async ({ page }
   expect(errors).toEqual([]);
 });
 
-test('search, family, photos and sorting combine correctly and reset', async ({ page }) => {
+test('search, family and sorting combine correctly and reset', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: 'Ultra', exact: true }).click();
   await page.getByRole('searchbox').fill('gold');
   await expect(page.locator('.can-card')).toHaveCount(1);
   await expect(page.locator('.can-label h2')).toHaveText('Ultra Gold');
-  await page.getByLabel('Photos only').check();
-  await expect(page.locator('.can-card')).toHaveCount(1);
   await page.getByRole('searchbox').fill('not-a-monster-flavor');
   await expect(page.getByText('NOTHING IN THE VAULT.')).toBeVisible();
   await page.getByRole('button', { name: 'Reset filters' }).click();

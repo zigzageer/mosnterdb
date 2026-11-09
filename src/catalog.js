@@ -122,6 +122,12 @@ export const catalog = seed.map(([name, family, flavor, color, image], index) =>
 
 export const families = ['Original', 'Ultra', 'Juiced', 'Java', 'Rehab', 'Reserve', 'Nitro', 'Hydro'];
 
+// One livery colour per family, used by the filter chips, card labels and progress bars.
+export const familyLivery = {
+  Original: '#a2f500', Ultra: '#dfe9ef', Juiced: '#ff9a1f', Java: '#d9a366',
+  Rehab: '#ffd91a', Reserve: '#ff5d7c', Nitro: '#b48cff', Hydro: '#31d2ff',
+};
+
 export function filterCatalog({ query = '', family = 'All', photos = false, collection = false, saved = [], sort = 'shelf' } = {}) {
   const terms = query.toLocaleLowerCase().trim().split(/\s+/).filter(Boolean);
   const result = catalog.filter(can => {

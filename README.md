@@ -1,11 +1,27 @@
 # MonsterDB
 
-A Monster-inspired Y2K can archive: acid green graphics, distressed oversized type, chrome accents, a three-can hero, and a searchable product grid. The catalog contains 101 flavor entries, each with a real sourced packaging photo, including Red White Blue Razz and Ultra Punk Punch. Includes family filters, sorting, can details, and collections saved in the current browser.
+A fan-made Monster can archive dressed like a Y2K race livery: black can, toxic green claw rips, wide italic race type, tattoo-gothic accent words, hazard tape, number plates and sticker-thick outlines. The catalog contains 101 flavor entries, each with a real sourced packaging photo, including Red White Blue Razz and Ultra Punk Punch. Includes search, family filters, sorting, can details, a tried list with ratings, and a collection saved in the current browser.
+
+![MonsterDB archive page](screenshots/archive.jpg)
+
+## Look and feel
+
+- **Type:** Tomorrow (wide italic display and numerals), Barlow Condensed (can names, buttons), Chakra Petch (body and labels), New Rocker (the gothic accent word in each headline) and Sedgwick Ave Display (marker scribbles). All are bundled locally.
+- **Colour:** each card stage is painted in that can's own colour, so the grid reads as a wall of liveries. Each family also has an accent colour (`familyLivery` in `src/catalog.js`) used by the filter chips.
+- **Art:** the claw rips, chrome sparkles, tachometer, spinning badge and barcode are generated in `src/art.js`. Hazard stripes, halftone and grain are CSS. No extra image files are added, which keeps the standalone export working. `src/style.css` may only reference fonts and `data:` URIs.
+- **Motion:** hover lifts, a claw strike and stamp when a can is marked tried, and a sweeping tach needle. Everything is switched off under `prefers-reduced-motion`.
+
+## Getting around
+
+- **The archive, My tried list, Left to try, My collection** are four pages. Header tabs on desktop, a fixed bottom tab bar on phones. Opening one from the navigation starts with clean filters at the top of the page. The matching tabs inside the filter bar switch lists without losing your search or family filter.
+- The search and family bar sticks to the top while you scroll the grid. Press `/` to jump to search and `Esc` to clear it. Family chips show a small bar of how much of that family you have tried.
+- Open a can and step through the current list with **Prev / Next** or the arrow keys. **Surprise me** / **Pick my next can** opens a random flavor you have not tried.
+- Changes show a toast with **Undo**, including un-trying a can (which would otherwise drop its rating) and collection changes.
 
 ## Tried lists and share cards
 
-- Use **Mark as tried** on a can or in its details. **My tried list** shows your progress; **Left to try** is a dedicated main-navigation list showing every remaining flavor. It updates when you mark a can tried and can be bookmarked or shared directly. The existing collection feature stays separate.
-- Tried cans have personal **1–5 star ratings**, with change and clear controls on the card and in its details. Use **Top rated** or **Lowest rated** sorting to review them. Ratings are included in browser storage, personal links and PNG share cards. Marking a can untried removes its rating.
+- Use **Mark as tried** on a can or in its details. **My tried list** shows your progress on a tachometer with a rank and the next milestone; **Left to try** is a dedicated list showing every remaining flavor. It updates when you mark a can tried and can be bookmarked or shared directly. The collection (**Collect** on a card) is separate: it is for cans you own, and a can can be in both.
+- Every can has **1–5 star ratings**, with change and clear controls on the card and in its details. Rating a can you have not marked yet marks it tried in the same tap. Use **Top rated** or **Lowest rated** sorting to review them. Ratings are included in browser storage, personal links and PNG share cards. Marking a can untried removes its rating; **Undo** in the toast brings both back.
 - Progress saves automatically in localStorage. **Copy tracking link** creates a compact link that carries the current selection and optional display name. No account, cookie, API key or backend is required.
 - A link is a snapshot, not a permanently synchronized account. The address bar updates when you change your own tracker. Copy or bookmark the updated address after changes to preserve the latest state on another device.
 - Someone else's link opens in preview mode and leaves your progress untouched. **Use this tracker** restores it on a fresh browser; **Add to my tracker** merges it with existing progress rather than replacing it.
@@ -52,7 +68,7 @@ npm run build
 npm test
 ```
 
-Browser tests use `/usr/bin/chromium`; set `CHROMIUM_PATH` for the production Pages smoke test on another machine, and update Playwright's `executablePath` for its development suite. The 18 tests cover every image, official U.S. dataset coverage, filters, search, sorting, collections, tried tracking, compact link round trips, cross-browser restoration, non-destructive shared previews, unavailable storage, PNG downloads, actual QR decoding, full-catalog export, star rating persistence and sorting, backward-compatible rated links, shared-rating merge rules, the dedicated remaining list, keyboard focus and mobile layout. A separate production smoke test verifies the `/mosnterdb/` path, tracking and PNG generation.
+Browser tests use `/usr/bin/chromium` by default; set `CHROMIUM_PATH` to use another Chromium for both the development suite and the production Pages smoke test, for example `CHROMIUM_PATH=/opt/pw-browsers/chromium npm test`. The 26 tests cover every image, official U.S. dataset coverage, filters, search, sorting, collections, tried tracking, compact link round trips, cross-browser restoration, non-destructive shared previews, unavailable storage, PNG downloads, actual QR decoding, full-catalog export, star rating persistence and sorting, backward-compatible rated links, shared-rating merge rules, the dedicated remaining list, keyboard focus and mobile layout. `tests/experience.spec.js` covers the interaction details: one-tap rating, undo, list pages and in-place list tabs, search clearing, stepping through can details, the surprise pick, arrow-key star ratings and the phone tab bar. A separate production smoke test verifies the `/mosnterdb/` path, tracking and PNG generation.
 
 Each cloud task is already isolated. Use the existing checkout; do not create a Git worktree unless explicitly requested. Live server processes must be restarted after restoring an environment snapshot.
 

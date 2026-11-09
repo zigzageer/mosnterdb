@@ -43,6 +43,9 @@ try {
   assert.equal(await page.locator('.can-card').count(), 1);
   assert.equal(await page.locator('.can-label h2').textContent(), 'Mango Loco');
   assert.equal(await page.getByRole('button', {name:'Rate Mango Loco 5 out of 5 stars',exact:true}).getAttribute('aria-pressed'),'true');
+  // The collection has its own shelf header; the share card lives with the tried list.
+  await page.getByRole('button', { name:'My tried list', exact:false }).click();
+  assert.equal(await page.locator('.can-card').count(), 1);
   await page.locator('#tracker-panel [data-open-share]').click();
   await page.locator('#download-png').waitFor();
   await page.waitForFunction(() => !document.querySelector('#download-png').disabled);

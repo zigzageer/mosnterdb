@@ -30,7 +30,7 @@ The flavor index is a manually assembled starter catalog, not a completeness cla
 
 ## Fonts
 
-Barlow Condensed and DM Sans are distributed by their respective Fontsource packages under the SIL Open Font License; package license files are retained in node_modules and fonts are bundled locally by Vite.
+Tomorrow, Barlow Condensed, Chakra Petch, New Rocker and Sedgwick Ave Display are distributed by their respective Fontsource packages under the SIL Open Font License 1.1; package license files are retained in node_modules and fonts are bundled locally by Vite. The claw rips, sparkles, tachometer, hazard tape and other decals are generated in `src/art.js` and `src/style.css`; no logo or artwork file from Monster Energy is used outside the sourced can photos.
 
 ## Expanded photo research and Y2K redesign
 

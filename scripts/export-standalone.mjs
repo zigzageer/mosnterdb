@@ -33,6 +33,6 @@ for (const match of matches) {
   css = css.replaceAll(match[0], `url(data:${mime};base64,${bytes.toString('base64')})`);
 }
 const html = `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a0a0a"><title>MonsterDB — The Can Archive</title><style>${css}</style></head><body><div id="app"></div><script>window.__monsterImages=${JSON.stringify(images)};\n${js}</script></body></html>`;
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050505"><meta name="color-scheme" content="dark"><title>MonsterDB — The Can Archive</title><style>${css}</style></head><body><div id="app"></div><script>window.__monsterImages=${JSON.stringify(images)};\n${js}</script></body></html>`;
 await writeFile(resolve(root, 'MonsterDB.html'), html);
 console.log(`Created MonsterDB.html (${(Buffer.byteLength(html) / 1024 / 1024).toFixed(1)} MB). Open directly in a browser; no server required.`);
